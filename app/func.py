@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 def index_page():
     content = html.Div([
         html.Div([
-            dbc.Button("Go to covid stats", color="dark", className="mr-1", href='/covid')
+            dbc.Button("Go to covid stats ", color="dark", className="mr-1", href='/covid')
         ], className='text-center container', style={'paddingTop': "50px"})
     ])
     return content
