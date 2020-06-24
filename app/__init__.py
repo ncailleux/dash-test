@@ -6,6 +6,7 @@ import dash_bootstrap_components as dbc
 
 def create_app():
     app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+    server = app.server
     app.layout = html.Div([
         dcc.Location(id='url', refresh=False),
         html.Div(id='page-content')
