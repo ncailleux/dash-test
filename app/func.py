@@ -2,6 +2,10 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import plotly.express as px
+from app.utils import get_data
+import pandas as pd
+import plotly.graph_objects as go
 
 
 def index_page():
@@ -14,29 +18,23 @@ def index_page():
 
 
 def covid_page():
-    colors = {
-        'background': '#111111',
-        'text': '#7FDBFF'
-    }
+    data = get_data()
+    df = pd.DataFrame({
+        "height": [x['height'] for x in data],
+        "weight": [x['weight'] for x in data],
+        "pokemon": [x['name'] for x in data],
+        "image": [x['image'] for x in data],
+        "size": [ x['weight'] / x['height'] for x in data]
+    })
+    fig = px.scatter(df, x="height", y="weight", size='size', text="pokemon", hover_data=["pokemon"])
+    # fig.update_traces(hovertemplate="<b>%{marker.pokemon}%{text}</b><br><br><b>Height: </b>%{x:.2f}<br><b>Weight: </b>%{y:.2f}")
     content = html.Div([
         html.Div([
             dbc.Button("Back to home", color="dark", className="mr-1", href='/'),
             html.Div([
                 dcc.Graph(
-                    id='Graph1',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [2, 4, 5], 'type': 'bar', 'name': u'Montréal'},
-                        ],
-                        'layout': {
-                            'plot_bgcolor': colors['background'],
-                            'paper_bgcolor': colors['background'],
-                            'font': {
-                                'color': colors['text']
-                            }
-                        }
-                    }
+                    id='Pokemon and their height',
+                    figure=fig
                 )
             ], style={"paddingTop": "40px"})
         ], className='text-center container', style={'paddingTop': "50px"})

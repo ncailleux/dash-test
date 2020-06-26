@@ -6,8 +6,6 @@ import dash_bootstrap_components as dbc
 
 
 def create_app():
-    # app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-    # server = app.server
     server = flask.Flask(__name__)
     app = dash.Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
